@@ -1,5 +1,7 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { profileLinks, site } from '../lib/site';
 
@@ -13,6 +15,8 @@ type Props = {
   type?: 'website' | 'article';
   /** Extra structured data for this page, such as a BlogPosting. */
   jsonLd?: Record<string, unknown>;
+  /** Keep this page out of search engines (e.g. the style guide). */
+  noindex?: boolean;
 };
 
 const {
@@ -22,6 +26,7 @@ const {
   canonicalUrl,
   type = 'website',
   jsonLd,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} · ${site.author}` : site.author;
@@ -44,8 +49,13 @@ const person = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
+    <Font cssVariable="--font-open-sans" preload={[{ weight: '400' }]} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -60,7 +70,7 @@ const person = {
     />
     <meta
       name="theme-color"
-      content="#121212"
+      content="#161b26"
       media="(prefers-color-scheme: dark)"
     />
 
@@ -86,22 +96,29 @@ const person = {
     <main id="main">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
 
 <style>
+  main {
+    max-width: var(--width-page);
+    margin: 0 auto;
+    padding-top: var(--space-8);
+  }
+
   .skip-link {
     position: absolute;
-    left: 1rem;
+    left: var(--space-4);
     top: 0;
     transform: translateY(-150%);
-    padding: 0.5rem 1rem;
-    background: var(--bg);
-    border: 2px solid var(--accent);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-surface);
+    border: 2px solid var(--color-link);
     z-index: 1;
   }
 
   .skip-link:focus {
-    transform: translateY(1rem);
+    transform: translateY(var(--space-4));
   }
 </style>

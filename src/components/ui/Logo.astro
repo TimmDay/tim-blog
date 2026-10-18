@@ -1,0 +1,32 @@
+---
+/** The TD lettermark. Same artwork as public/favicon.svg. */
+type Props = { size?: number };
+const { size = 30 } = Astro.props;
+---
+
+<svg
+  class="logo"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 200 200"
+  width={size}
+  height={size}
+  aria-hidden="true"
+  focusable="false"
+>
+  <circle cx="100" cy="100" r="95" fill="#2c3e50"></circle>
+  <g fill="#ecf0f1">
+    <rect x="34" y="58" width="82" height="16"></rect>
+    <rect x="67" y="58" width="16" height="88"></rect>
+    <path
+      fill-rule="evenodd"
+      d="M122 58h26a44 44 0 0 1 0 88h-26zm16 16v56h10a28 28 0 0 0 0-56z"
+    ></path>
+  </g>
+</svg>
+
+<style>
+  .logo {
+    display: block;
+    flex-shrink: 0;
+  }
+</style>

@@ -23,61 +23,89 @@ export const getStaticPaths = (async () => {
   ];
 }) satisfies GetStaticPaths;
 
-const fontDir = join(process.cwd(), 'node_modules/@fontsource/inter/files');
+const fontDir = join(process.cwd(), 'node_modules/@fontsource/open-sans/files');
+const logo = `data:image/svg+xml;base64,${Buffer.from(
+  await readFile(join(process.cwd(), 'public/favicon.svg')),
+).toString('base64')}`;
+
+// Colours mirror the light theme in src/styles/tokens.css.
+const color = {
+  bg: '#f9fafc',
+  surface: '#ffffff',
+  text: '#65738c',
+  heading: '#3e465b',
+  accent: '#3498db',
+  border: '#e0e6ed',
+};
+
+const el = (
+  type: string,
+  style: Record<string, unknown>,
+  children?: unknown,
+) => ({
+  type,
+  props: { style, children },
+});
 
 export const GET: APIRoute = async ({ props }) => {
   const { title, subtitle } = props as { title: string; subtitle: string };
   const [regular, bold] = await Promise.all([
-    readFile(join(fontDir, 'inter-latin-400-normal.woff')),
-    readFile(join(fontDir, 'inter-latin-700-normal.woff')),
+    readFile(join(fontDir, 'open-sans-latin-400-normal.woff')),
+    readFile(join(fontDir, 'open-sans-latin-700-normal.woff')),
   ]);
 
   const svg = await satori(
-    {
-      type: 'div',
-      props: {
-        style: {
-          width: '100%',
-          height: '100%',
+    el(
+      'div',
+      {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        padding: '48px',
+        background: color.bg,
+        fontFamily: 'Open Sans',
+      },
+      el(
+        'div',
+        {
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '72px',
-          background: '#121212',
-          color: '#e8e8e8',
-          fontFamily: 'Inter',
+          padding: '56px 64px',
+          background: color.surface,
+          border: `1px solid ${color.border}`,
+          borderBottom: `8px solid ${color.accent}`,
         },
-        children: [
-          {
-            type: 'div',
-            props: {
-              style: { fontSize: 32, fontWeight: 700, color: '#93c5fd' },
-              children: site.wordmark,
+        [
+          el('div', { display: 'flex', alignItems: 'center', gap: '16px' }, [
+            { type: 'img', props: { src: logo, width: 56, height: 56 } },
+            el(
+              'div',
+              { fontSize: 32, fontWeight: 700, color: color.heading },
+              site.wordmark,
+            ),
+          ]),
+          el(
+            'div',
+            {
+              fontSize: 60,
+              fontWeight: 700,
+              lineHeight: 1.2,
+              color: color.heading,
             },
-          },
-          {
-            type: 'div',
-            props: {
-              style: { fontSize: 64, fontWeight: 700, lineHeight: 1.15 },
-              children: title,
-            },
-          },
-          {
-            type: 'div',
-            props: {
-              style: { fontSize: 30, color: '#a3a3a3' },
-              children: subtitle,
-            },
-          },
+            title,
+          ),
+          el('div', { fontSize: 28, color: color.text }, subtitle),
         ],
-      },
-    },
+      ),
+    ) as Parameters<typeof satori>[0],
     {
       width: 1200,
       height: 630,
       fonts: [
-        { name: 'Inter', data: regular, weight: 400, style: 'normal' },
-        { name: 'Inter', data: bold, weight: 700, style: 'normal' },
+        { name: 'Open Sans', data: regular, weight: 400, style: 'normal' },
+        { name: 'Open Sans', data: bold, weight: 700, style: 'normal' },
       ],
     },
   );

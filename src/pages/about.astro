@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import ArrowLink from '../components/ui/ArrowLink.astro';
+import Card from '../components/ui/Card.astro';
 import { site } from '../lib/site';
 ---
 
@@ -7,20 +9,22 @@ import { site } from '../lib/site';
   title="About"
   description={`About ${site.author}: background and experience.`}
 >
-  <h1>About</h1>
-  <!-- Placeholder copy: Tim to replace with a short career story and a CV summary. -->
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-    erat a ante venenatis dapibus posuere velit aliquet.
-  </p>
+  <Card as="article">
+    <h1>About</h1>
+    <!-- Placeholder copy: Tim to replace with a short career story and a CV summary. -->
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+      erat a ante venenatis dapibus posuere velit aliquet.
+    </p>
 
-  <h2>Experience</h2>
-  <ul>
-    <li>Lorem ipsum, Role, 2020 to now</li>
-    <li>Dolor sit amet, Role, 2016 to 2020</li>
-  </ul>
+    <h2>Experience</h2>
+    <ul>
+      <li>Lorem ipsum, Role, 2020 to now</li>
+      <li>Dolor sit amet, Role, 2016 to 2020</li>
+    </ul>
 
-  <p>
-    Full details are in the <a href="/contact/">CV</a>.
-  </p>
+    <p>
+      <ArrowLink href="/contact/">Download my CV</ArrowLink>
+    </p>
+  </Card>
 </Base>

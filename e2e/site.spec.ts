@@ -52,3 +52,30 @@ test('every page has a link preview image and a canonical URL', async ({
     'https://timmday.com/posts/widgets-demo/',
   );
 });
+
+test("the contact page is titled Let's talk and linked from the header", async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page
+    .getByRole('navigation', { name: 'Main' })
+    .getByRole('link', { name: "Let's talk" })
+    .click();
+  await expect(page).toHaveURL(/\/contact\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    "Let's talk",
+  );
+});
+
+test('the style guide is kept out of search engines and the sitemap', async ({
+  page,
+  request,
+}) => {
+  await page.goto('/styleguide/');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    'content',
+    'noindex',
+  );
+  const sitemap = await (await request.get('/sitemap-0.xml')).text();
+  expect(sitemap).not.toContain('styleguide');
+});

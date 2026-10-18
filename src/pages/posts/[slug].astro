@@ -1,6 +1,8 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Card from '../../components/ui/Card.astro';
+import Tag from '../../components/ui/Tag.astro';
 import {
   formatDate,
   getVisiblePosts,
@@ -41,10 +43,10 @@ const blogPosting = {
   type="article"
   jsonLd={blogPosting}
 >
-  <article>
+  <Card as="article">
     <header>
       <h1>{title}</h1>
-      <p class="muted meta">
+      <p class="meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
         {updated && (
           <>
@@ -57,7 +59,9 @@ const blogPosting = {
       {tags.length > 0 && (
         <ul class="tags" aria-label="Tags">
           {tags.map((tag) => (
-            <li>{tag}</li>
+            <li>
+              <Tag>{tag}</Tag>
+            </li>
           ))}
         </ul>
       )}
@@ -65,42 +69,26 @@ const blogPosting = {
     <div class="prose">
       <Content />
     </div>
-  </article>
+  </Card>
 </Base>
 
 <style>
   .meta {
+    color: var(--color-muted);
+    font-size: var(--text-base);
     margin: 0;
   }
 
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
     list-style: none;
     padding: 0;
-    margin: 0.75rem 0 0;
-    font-size: 0.875rem;
-  }
-
-  .tags li {
-    padding: 0.1rem 0.6rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--muted);
+    margin: var(--space-3) 0 0;
   }
 
   .prose {
-    margin-top: 2rem;
-  }
-
-  .prose :global(figure) {
-    margin: 2rem 0;
-  }
-
-  .prose :global(figcaption) {
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
+    margin-top: var(--space-10);
   }
 </style>

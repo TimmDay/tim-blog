@@ -1,0 +1,30 @@
+---
+/** A list of short statements, each with a bold lead-in and a left rule. */
+export type Belief = { lead: string; body: string };
+type Props = { items: Belief[] };
+const { items } = Astro.props;
+---
+
+<ul>
+  {items.map((item) => (
+    <li>
+      <strong>{item.lead}</strong> {item.body}
+    </li>
+  ))}
+</ul>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  li {
+    padding-left: var(--space-5);
+    border-left: 3px solid var(--color-accent);
+  }
+</style>

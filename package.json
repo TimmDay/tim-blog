@@ -28,7 +28,7 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@astrojs/svelte": "^9.1.0",
-    "@fontsource/inter": "^5.3.0",
+    "@fontsource/open-sans": "^5.3.0",
     "astro": "^7.4.0",
     "sanitize-html": "^2.18.1",
     "satori": "^0.62.0",

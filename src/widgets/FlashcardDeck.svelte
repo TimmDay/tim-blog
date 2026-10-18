@@ -30,17 +30,17 @@
 
 <style>
   .deck {
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     padding: 1rem;
-    background: var(--surface);
+    background: var(--color-bg);
   }
 
   .count,
   .side {
     margin: 0;
-    font-size: 0.875rem;
-    color: var(--muted);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
   }
 
   .card {
@@ -51,7 +51,7 @@
   }
 
   .text {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     margin: 0.5rem 0;
   }
 
@@ -63,18 +63,18 @@
 
   button {
     font: inherit;
-    font-size: 1rem;
+    font-size: var(--text-base);
     padding: 0.5rem 1rem;
     min-height: 44px;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    background: var(--bg);
-    color: var(--fg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-heading);
     cursor: pointer;
   }
 
   .primary {
-    border-color: var(--accent);
+    border-color: var(--color-accent);
     font-weight: 600;
   }
 </style>

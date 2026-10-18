@@ -11,6 +11,14 @@ Tim Day's blog at timmday.com. Read [GLOSSARY.md](GLOSSARY.md) for the project's
 - Drafts (`draft: true`) are built only when `SHOW_DRAFTS=true` (CI and preview deploys).
 - Lighthouse bar: performance 95+, accessibility 100. CI enforces both, plus axe in light, dark and mobile.
 
+## Design system
+
+- Tokens (colour, type, spacing, shape) live in `src/styles/tokens.css`. Use a token for every colour, font size and space; never a raw value.
+- Shared UI components live in `src/components/ui/` (Button, Card, ArrowLink, Eyebrow, Tag, Logo).
+- `/styleguide/` renders every token and component. It is `noindex` and left out of the sitemap.
+- `--color-accent` is decorative only (rules, bars). Text in the link colour must use `--color-link`, which passes WCAG AA.
+- Links in running text are underlined. Standalone links (nav, titles, ArrowLink) are not.
+
 ## Commands
 
 ```sh

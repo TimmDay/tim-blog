@@ -7,6 +7,7 @@ const pages = [
   '/posts/widgets-demo/',
   '/about/',
   '/contact/',
+  '/styleguide/',
   '/404.html',
 ];
 
