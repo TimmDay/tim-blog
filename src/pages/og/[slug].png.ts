@@ -68,7 +68,10 @@ export const GET: APIRoute = async ({ props }) => {
       el(
         'div',
         {
-          flex: 1,
+          // Satori sizes boxes as content-box: 1200 - 2*48 padding = 1104, 630 - 96 = 534.
+          width: 1104,
+          height: 534,
+          boxSizing: 'border-box',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
