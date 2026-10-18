@@ -18,17 +18,32 @@
     "format": "prettier --write .",
     "test": "vitest",
     "test:run": "vitest run --passWithNoTests",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:e2e": "playwright test",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.3",
     "@astrojs/mdx": "^8.1.0",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/svelte": "^9.1.0",
+    "@fontsource/inter": "^5.3.0",
     "astro": "^7.4.0",
-    "svelte": "^5.57.2"
+    "sanitize-html": "^2.18.1",
+    "satori": "^0.62.0",
+    "sharp": "^0.35.5",
+    "svelte": "^5.57.2",
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.64.1",
+    "@types/mdast": "^4.0.4",
+    "@types/sanitize-html": "^2.16.2",
     "eslint": "^10.13.0",
     "eslint-plugin-astro": "^3.2.1",
     "eslint-plugin-svelte": "^3.23.1",
@@ -38,8 +53,10 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.1",
     "prettier-plugin-svelte": "^4.1.1",
+    "remark-parse": "^11.0.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.2",
+    "unified": "^11.0.5",
     "vitest": "^5.0.5"
   },
   "lint-staged": {

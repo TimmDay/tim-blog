@@ -1,10 +1,17 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
+import { remarkRequireAlt } from './src/lib/remark-require-alt.ts';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://timmday.com',
-  integrations: [mdx(), svelte()],
+  trailingSlash: 'always',
+  image: { layout: 'constrained' },
+  integrations: [mdx(), svelte(), sitemap()],
+  markdown: {
+    remarkPlugins: [remarkRequireAlt],
+  },
 });

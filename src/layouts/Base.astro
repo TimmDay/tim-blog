@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import { profileLinks, site } from '../lib/site';
+
+type Props = {
+  title?: string;
+  description?: string;
+  /** Path to the link preview image, e.g. /og/my-post.png */
+  ogImage?: string;
+  /** Overrides the canonical URL, for Posts first published elsewhere. */
+  canonicalUrl?: string;
+  type?: 'website' | 'article';
+  /** Extra structured data for this page, such as a BlogPosting. */
+  jsonLd?: Record<string, unknown>;
+};
+
+const {
+  title,
+  description = site.description,
+  ogImage = '/og/default.png',
+  canonicalUrl,
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${site.author}` : site.author;
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, site.url).href;
+const ogImageUrl = new URL(ogImage, site.url).href;
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.author,
+  url: site.url,
+  sameAs: profileLinks.map((link) => link.href),
+};
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={site.author}
+      href="/rss.xml"
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#121212"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title ?? site.author} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    transform: translateY(-150%);
+    padding: 0.5rem 1rem;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    z-index: 1;
+  }
+
+  .skip-link:focus {
+    transform: translateY(1rem);
+  }
+</style>
