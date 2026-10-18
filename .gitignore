@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+
+# Rough post ideas, never committed
+drafts/
+
+# Test output
+test-results/
+playwright-report/
+.lighthouseci/
