@@ -1,0 +1,35 @@
+---
+/**
+ * Wraps every interactive Widget (see ADR 0002).
+ *
+ * On the site, the Widget is server-rendered so it already has its final size
+ * before its JS loads, and the Fallback is shown only to visitors without JS.
+ * In the RSS feed (locals.rss), only the Fallback is rendered.
+ */
+type Props = { caption?: string };
+const { caption } = Astro.props;
+const rss = Astro.locals.rss === true;
+---
+
+{rss ? (
+  <div>
+    <slot name="fallback" />
+  </div>
+) : (
+  <figure class="widget">
+    <div class="widget-live">
+      <slot />
+    </div>
+    <noscript>
+      <style is:inline set:html=".widget-live { display: none; }" />
+      <slot name="fallback" />
+    </noscript>
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+
+<style>
+  .widget {
+    margin: var(--space-8) 0;
+  }
+</style>

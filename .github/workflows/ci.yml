@@ -12,6 +12,10 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Build draft Posts too, so the demo Post and its Widgets are tested.
+  SHOW_DRAFTS: 'true'
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -35,5 +39,56 @@ jobs:
       - name: Unit tests
         run: pnpm test:run
 
-      - name: Build
+      # Exactly what production ships: no drafts.
+      - name: Production build
         run: pnpm build
+        env:
+          SHOW_DRAFTS: 'false'
+
+      - name: Build with drafts, for e2e and Lighthouse
+        run: pnpm build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 3
+
+  e2e:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Accessibility and behaviour tests
+        run: pnpm test:e2e
+
+  lighthouse:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - name: Lighthouse (performance >= 95, accessibility 100)
+        run: pnpm lighthouse

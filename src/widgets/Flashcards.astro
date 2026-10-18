@@ -1,0 +1,25 @@
+---
+import FlashcardDeck from './FlashcardDeck.svelte';
+import WidgetFrame from './WidgetFrame.astro';
+import type { Card } from './flashcards';
+
+type Props = { title: string; cards: Card[]; caption?: string };
+const { title, cards, caption } = Astro.props;
+---
+
+<WidgetFrame caption={caption}>
+  <FlashcardDeck client:visible title={title} cards={cards} />
+  <Fragment slot="fallback">
+    <p>
+      <strong>{title}</strong>
+    </p>
+    <dl>
+      {cards.map((card) => (
+        <>
+          <dt>{card.front}</dt>
+          <dd>{card.back}</dd>
+        </>
+      ))}
+    </dl>
+  </Fragment>
+</WidgetFrame>

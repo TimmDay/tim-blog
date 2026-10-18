@@ -1,0 +1,102 @@
+---
+import { site } from '../lib/site';
+import Logo from './ui/Logo.astro';
+
+const nav = [
+  { label: 'About', href: '/about/' },
+  { label: "Let's talk", href: '/contact/' },
+  { label: 'Posts', href: '/posts/' },
+];
+
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="/">
+      <Logo />
+      <span>{site.wordmark}</span>
+      <span class="visually-hidden">, home</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={path.startsWith(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-surface);
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding: var(--space-5) 0;
+  }
+
+  .bar {
+    max-width: var(--width-page);
+    margin: 0 auto;
+    padding: 0 var(--space-12);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-heading);
+    font-size: var(--text-lg);
+    text-decoration: none;
+  }
+
+  .wordmark:hover {
+    color: var(--color-link);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+  }
+
+  nav a {
+    color: var(--color-text);
+    font-weight: var(--weight-regular);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: var(--space-2) 0;
+  }
+
+  nav a:hover {
+    color: var(--color-link);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--color-heading);
+    font-weight: var(--weight-bold);
+  }
+
+  @media (max-width: 54.375rem) {
+    .bar {
+      padding: 0 var(--gutter);
+    }
+  }
+</style>

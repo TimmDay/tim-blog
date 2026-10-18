@@ -1,3 +1,33 @@
+# tim-blog
+
+Tim Day's blog at timmday.com. Read [GLOSSARY.md](GLOSSARY.md) for the project's words (Post, Widget, Fallback, Tag, CV Variant) and [docs/adr/](docs/adr/) for decisions.
+
+## Conventions
+
+- Tone: to the point and useful. No filler copy. Use lorem ipsum for placeholders; Tim writes all real copy.
+- A Post is `src/content/posts/<slug>/index.mdx` with its images beside it. Copy `widgets-demo/` to start one.
+- Every interactive Widget is wrapped in `src/widgets/WidgetFrame.astro` and has a Fallback (ADR 0002). Hydrate with `client:visible`, never `client:only`.
+- Images in Markdown must have alt text; the build fails otherwise.
+- Drafts (`draft: true`) are built only when `SHOW_DRAFTS=true` (CI and preview deploys).
+- Lighthouse bar: performance 95+, accessibility 100. CI enforces both, plus axe in light, dark and mobile.
+
+## Design system
+
+- Tokens (colour, type, spacing, shape) live in `src/styles/tokens.css`. Use a token for every colour, font size and space; never a raw value.
+- Shared UI components live in `src/components/ui/` (Button, Card, ArrowLink, Eyebrow, Tag, Logo).
+- `/styleguide/` renders every token and component. It is `noindex` and left out of the sitemap.
+- `--color-accent` is decorative only (rules, bars). Text in the link colour must use `--color-link`, which passes WCAG AA.
+- Links in running text are underlined. Standalone links (nav, titles, ArrowLink) are not.
+
+## Commands
+
+```sh
+pnpm check                              # lint + astro check
+pnpm test:run                           # unit tests (Vitest)
+SHOW_DRAFTS=true pnpm build && pnpm test:e2e   # Playwright + axe against dist/
+pnpm lighthouse                         # Lighthouse CI against dist/
+```
+
 ## Development
 
 When starting the dev server, use background mode:
@@ -8,15 +38,12 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
-## Documentation
+## Astro documentation
 
 Full documentation: https://docs.astro.build
 
-Consult these guides before working on related tasks:
-
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- [Routing](https://docs.astro.build/en/guides/routing/)
+- [Astro components](https://docs.astro.build/en/basics/astro-components/)
+- [Framework components (Svelte)](https://docs.astro.build/en/guides/framework-components/)
+- [Content collections](https://docs.astro.build/en/guides/content-collections/)
+- [Styling](https://docs.astro.build/en/guides/styling/)

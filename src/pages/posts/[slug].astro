@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/ui/Card.astro';
+import Tag from '../../components/ui/Tag.astro';
+import {
+  formatDate,
+  getVisiblePosts,
+  postUrl,
+  type Post,
+} from '../../lib/posts';
+import { site } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getVisiblePosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+type Props = { post: Post };
+const { post } = Astro.props;
+const { title, summary, date, updated, tags, canonicalUrl, draft } = post.data;
+const { Content } = await render(post);
+
+const blogPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: summary,
+  datePublished: date.toISOString(),
+  dateModified: (updated ?? date).toISOString(),
+  url: new URL(postUrl(post), site.url).href,
+  image: new URL(`/og/${post.id}.png`, site.url).href,
+  keywords: tags,
+  author: { '@type': 'Person', name: site.author, url: site.url },
+};
+---
+
+<Base
+  title={title}
+  description={summary}
+  ogImage={`/og/${post.id}.png`}
+  canonicalUrl={canonicalUrl}
+  type="article"
+  jsonLd={blogPosting}
+>
+  <Card as="article">
+    <header>
+      <h1>{title}</h1>
+      <p class="meta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        {updated && (
+          <>
+            {' · Updated '}
+            <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+          </>
+        )}
+        {draft && ' · Draft'}
+      </p>
+      {tags.length > 0 && (
+        <ul class="tags" aria-label="Tags">
+          {tags.map((tag) => (
+            <li>
+              <Tag>{tag}</Tag>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </Card>
+</Base>
+
+<style>
+  .meta {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    margin: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
+  }
+
+  .prose {
+    margin-top: var(--space-10);
+  }
+</style>

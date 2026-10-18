@@ -1,0 +1,21 @@
+---
+/** A small uppercase label that introduces a section, such as "Recent thinking". */
+type Props = { as?: 'h2' | 'h3' | 'p' };
+const { as: Tag = 'h2' } = Astro.props;
+---
+
+<Tag class="eyebrow">
+  <slot />
+</Tag>
+
+<style>
+  .eyebrow {
+    color: var(--color-heading);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--leading-normal);
+    text-transform: uppercase;
+    margin: var(--space-12) 0 var(--space-5);
+  }
+</style>

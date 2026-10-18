@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+import { cvVariants, profileLinks, site } from '../lib/site';
+---
+
+<Base
+  title="Let's talk"
+  description={`How to reach ${site.author}, and CV downloads.`}
+>
+  <Card as="article">
+    <h1>Let's talk</h1>
+    <!-- Placeholder copy: Tim to replace. -->
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+    <h2>Find me on</h2>
+    <ul>
+      {profileLinks.map((link) => (
+        <li>
+          <a href={link.href} rel="me">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <h2>CV</h2>
+    <ul class="cvs">
+      {cvVariants.map((cv, i) => (
+        <li>
+          <Button
+            href={cv.href}
+            download
+            variant={i === 0 ? 'primary' : 'secondary'}
+          >
+            {cv.role} CV <span class="type">(PDF)</span>
+          </Button>
+        </li>
+      ))}
+    </ul>
+  </Card>
+</Base>
+
+<style>
+  .cvs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .type {
+    font-weight: var(--weight-regular);
+  }
+</style>

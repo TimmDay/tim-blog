@@ -1,0 +1,20 @@
+---
+/** A standalone call to action: "Read more →". Not for links inside a sentence. */
+type Props = { href: string };
+const { href } = Astro.props;
+---
+
+<a href={href}>
+  <slot />
+  <span aria-hidden="true"> &rarr;</span>
+</a>
+
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
