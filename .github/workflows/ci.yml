@@ -39,7 +39,13 @@ jobs:
       - name: Unit tests
         run: pnpm test:run
 
-      - name: Build
+      # Exactly what production ships: no drafts.
+      - name: Production build
+        run: pnpm build
+        env:
+          SHOW_DRAFTS: 'false'
+
+      - name: Build with drafts, for e2e and Lighthouse
         run: pnpm build
 
       - uses: actions/upload-artifact@v4
