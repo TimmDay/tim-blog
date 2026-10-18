@@ -4,6 +4,8 @@ test('flashcard Widget flips and moves between cards', async ({ page }) => {
   await page.goto('/posts/widgets-demo/');
   const deck = page.getByRole('region', { name: 'Lorem flashcards' });
   await deck.scrollIntoViewIfNeeded();
+  // The deck is server-rendered; wait until its island has hydrated before clicking.
+  await expect(page.locator('astro-island:not([ssr])')).toHaveCount(1);
 
   await deck.getByRole('button', { name: 'Show answer' }).click();
   await expect(deck).toContainText('Sit amet, consectetur adipiscing elit.');
