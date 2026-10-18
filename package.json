@@ -1,0 +1,54 @@
+{
+  "name": "tim-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "astro check",
+    "check": "pnpm lint && pnpm typecheck",
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:run": "vitest run --passWithNoTests",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.0",
+    "@astrojs/svelte": "^9.1.0",
+    "astro": "^7.4.0",
+    "svelte": "^5.57.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "eslint-plugin-svelte": "^3.23.1",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "prettier-plugin-svelte": "^4.1.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,astro,svelte}": [
+      "eslint --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{md,mdx,json,css,yml}": [
+      "prettier --write"
+    ]
+  }
+}
