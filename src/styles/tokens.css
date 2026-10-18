@@ -4,23 +4,42 @@
  * WCAG AA. See /styleguide/ for every token rendered.
  */
 
+/*
+ * Theme. The OS setting decides by default; the header toggle overrides it by
+ * setting data-theme on <html> (see ThemeToggle.astro). Every colour below is
+ * light-dark(light value, dark value), so flipping color-scheme is enough.
+ */
 :root {
   color-scheme: light dark;
+}
 
-  /* Colour: light */
-  --color-bg: #f9fafc;
-  --color-surface: #ffffff;
-  --color-text: #65738c;
-  --color-heading: #3e465b;
-  --color-muted: #666d71;
-  --color-link: #2471a3; /* 5.3:1 on surface. #3498db only reaches 3.15:1. */
-  --color-link-hover: #1b5a84;
-  --color-accent: #3498db; /* Decorative only: borders, bars, focus. Never text. */
-  --color-on-accent: #ffffff;
-  --color-border: #e0e6ed;
-  --color-code-bg: #f5f5f5;
-  --color-code-text: #c7254e;
-  --color-brand: #2c3e50; /* Logo circle */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+:root {
+  /* Colour */
+  --color-bg: light-dark(#f9fafc, #0f141c);
+  --color-surface: light-dark(#ffffff, #161b26);
+  --color-text: light-dark(#65738c, #a7b1c4);
+  --color-heading: light-dark(#3e465b, #e6eaf1);
+  --color-muted: light-dark(#666d71, #9aa6ba);
+  /* Light link is 5.3:1 on surface. Andy's #3498db only reaches 3.15:1. */
+  --color-link: light-dark(#2471a3, #5dade2);
+  --color-link-hover: light-dark(#1b5a84, #8cc8ee);
+  /* Decorative only: borders, bars. Never text. */
+  --color-accent: light-dark(#3498db, #5dade2);
+  --color-on-accent: light-dark(#ffffff, #0f141c);
+  --color-border: light-dark(#e0e6ed, #2a3242);
+  --color-code-bg: light-dark(#f5f5f5, #1f2633);
+  --color-code-text: light-dark(#c7254e, #f28bab);
+  --color-shadow: light-dark(rgb(0 0 0 / 5%), transparent);
+  /* Logo: the same in both themes. */
+  --color-brand: #2c3e50;
   --color-on-brand: #ecf0f1;
 
   /* Typography */
@@ -68,27 +87,6 @@
   --radius-photo: 15%;
   --radius-pill: 999px;
   --border-width: 1px;
-  --shadow-card: 0 1px 5px rgb(0 0 0 / 5%);
+  --shadow-card: 0 1px 5px var(--color-shadow);
   --focus-ring: 3px solid var(--color-link);
-}
-
-/* Colour: dark. Same roles, tuned for contrast on a dark surface. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0f141c;
-    --color-surface: #161b26;
-    --color-text: #a7b1c4;
-    --color-heading: #e6eaf1;
-    --color-muted: #9aa6ba;
-    --color-link: #5dade2;
-    --color-link-hover: #8cc8ee;
-    --color-accent: #5dade2;
-    --color-on-accent: #0f141c;
-    --color-border: #2a3242;
-    --color-code-bg: #1f2633;
-    --color-code-text: #f28bab;
-    --color-brand: #2c3e50;
-    --color-on-brand: #ecf0f1;
-    --shadow-card: none;
-  }
 }

@@ -79,3 +79,36 @@ test('the style guide is kept out of search engines and the sitemap', async ({
   const sitemap = await (await request.get('/sitemap-0.xml')).text();
   expect(sitemap).not.toContain('styleguide');
 });
+
+test.describe('theme toggle', () => {
+  test.use({ colorScheme: 'light' });
+
+  test('switches theme and remembers the choice', async ({ page }) => {
+    await page.goto('/');
+    const html = page.locator('html');
+    const toggle = page.getByRole('button', { name: 'Switch to dark theme' });
+
+    await toggle.click();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+    await expect(
+      page.getByRole('button', { name: 'Switch to light theme' }),
+    ).toBeVisible();
+    const bg = await page.evaluate(
+      () => getComputedStyle(document.body).backgroundColor,
+    );
+    expect(bg).toBe('rgb(15, 20, 28)');
+
+    await page.goto('/about/');
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('is hidden without JS, where the OS setting applies', async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await page.goto('/');
+    await expect(page.locator('.theme-toggle')).toBeHidden();
+    await context.close();
+  });
+});

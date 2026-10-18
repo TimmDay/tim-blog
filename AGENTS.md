@@ -16,6 +16,7 @@ Tim Day's blog at timmday.com. Read [GLOSSARY.md](GLOSSARY.md) for the project's
 - Tokens (colour, type, spacing, shape) live in `src/styles/tokens.css`. Use a token for every colour, font size and space; never a raw value.
 - Shared UI components live in `src/components/ui/` (Button, Card, ArrowLink, Eyebrow, Tag, Logo).
 - `/styleguide/` renders every token and component. It is `noindex` and left out of the sitemap.
+- Every colour token is `light-dark(light, dark)`. The OS decides by default; the header toggle sets `data-theme` on `<html>` and saves it in localStorage.
 - `--color-accent` is decorative only (rules, bars). Text in the link colour must use `--color-link`, which passes WCAG AA.
 - Links in running text are underlined. Standalone links (nav, titles, ArrowLink) are not.
 
