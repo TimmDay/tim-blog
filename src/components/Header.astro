@@ -1,5 +1,6 @@
 ---
 import { site } from '../lib/site';
+import ThemeToggle from './ThemeToggle.astro';
 import Logo from './ui/Logo.astro';
 
 const nav = [
@@ -18,20 +19,23 @@ const path = Astro.url.pathname;
       <span>{site.wordmark}</span>
       <span class="visually-hidden">, home</span>
     </a>
-    <nav aria-label="Main">
-      <ul>
-        {nav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              aria-current={path.startsWith(item.href) ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div class="end">
+      <nav aria-label="Main">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={path.startsWith(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <ThemeToggle />
+    </div>
   </div>
 </header>
 
@@ -64,6 +68,12 @@ const path = Astro.url.pathname;
 
   .wordmark:hover {
     color: var(--color-link);
+  }
+
+  .end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
   }
 
   ul {

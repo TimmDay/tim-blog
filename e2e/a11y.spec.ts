@@ -39,3 +39,24 @@ test('the demo Post still has no violations with the aside open and a card flipp
     .analyze();
   expect(results.violations).toEqual([]);
 });
+
+for (const [os, picked] of [
+  ['light', 'dark'],
+  ['dark', 'light'],
+] as const) {
+  test.describe(`theme overridden to ${picked} on a ${os} OS`, () => {
+    test.use({ colorScheme: os });
+
+    test('has no violations', async ({ page }) => {
+      await page.goto('/posts/widgets-demo/');
+      await page
+        .getByRole('button', { name: `Switch to ${picked} theme` })
+        .click();
+      await expect(page.locator('html')).toHaveAttribute('data-theme', picked);
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa'])
+        .analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+}
