@@ -56,8 +56,8 @@ dl {
 }
 
 /*
- * Long-form reading text: Posts, About, Let's talk. Serif and grey, like
- * lethain.com. Everything outside .prose is sans and near-black.
+ * Long-form reading text: Posts, About, Let's talk. Serif and grey.
+ * Everything outside .prose is sans and near-black.
  */
 .prose {
   color: var(--color-text);

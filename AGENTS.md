@@ -14,7 +14,7 @@ Tim Day's blog at timmday.com. Read [GLOSSARY.md](GLOSSARY.md) for the project's
 ## Design system
 
 - Tokens (colour, type, spacing, shape) live in `src/styles/tokens.css`. Use a token for every colour, font size and space; never a raw value.
-- The look follows lethain.com: system fonts only (no font downloads), a white page, near-black sans UI text, and a grey serif `.prose` column for reading.
+- The design draws inspiration from lethain.com and andykelk.net, and is Tim's own to evolve. Current choices: system fonts only (no font downloads), a white page, near-black sans UI text, and a grey serif `.prose` column for reading.
 - Shared UI components live in `src/components/ui/` (Button, ArrowLink, Logo).
 - `Base` takes a `width` prop: `prose` for reading pages, `page` for lists, `wide` for a Post and its sidebar.
 - `/styleguide/` renders every token and component. It is `noindex` and left out of the sitemap.

@@ -1,8 +1,8 @@
 /*
  * Design tokens. Every colour, size and space in the site comes from here.
- * The look follows lethain.com: system fonts, a white page, near-black UI text,
- * a serif reading column and blue underlined links. The link blue is darker
- * than lethain's #357edd so it passes WCAG AA on the grey sidebar too.
+ * The design draws inspiration from lethain.com and andykelk.net: system fonts,
+ * a white page, near-black UI text, a serif reading column and blue underlined
+ * links. The link blue is dark enough to pass WCAG AA on the grey sidebar.
  * See /styleguide/ for every token rendered.
  */
 
@@ -33,7 +33,7 @@
   /* Headings, nav, Post titles. */
   --color-heading: light-dark(#1a1a1a, #ededed);
   --color-muted: light-dark(#555555, #a3a3a3);
-  /* 5.3:1 on the surface grey. Lethain's #357edd only reaches 3.7:1 there. */
+  /* 5.3:1 on the surface grey. A brighter blue like #357edd only reaches 3.7:1. */
   --color-link: light-dark(#2563c0, #7db4f2);
   --color-link-hover: light-dark(#1a4a94, #a8c8f5);
   /* Decorative only: borders, bars. Never text. */
