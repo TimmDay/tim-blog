@@ -5,7 +5,8 @@ Tim Day's blog at timmday.com. Read [GLOSSARY.md](GLOSSARY.md) for the project's
 ## Conventions
 
 - Tone: to the point and useful. No filler copy. Use lorem ipsum for placeholders; Tim writes all real copy.
-- A Post is `src/content/posts/<slug>/index.mdx` with its images beside it. Copy `widgets-demo/` to start one.
+- A Post is `src/content/posts/<slug>/index.mdx` with its images beside it. Start one with `pnpm new-post "Title"`; it begins as a draft. `widgets-demo/` shows images and Widgets.
+- A published Post must have a summary; the build fails otherwise.
 - Every interactive Widget is wrapped in `src/widgets/WidgetFrame.astro` and has a Fallback (ADR 0002). Hydrate with `client:visible`, never `client:only`.
 - Images in Markdown must have alt text; the build fails otherwise.
 - Drafts (`draft: true`) are built only when `SHOW_DRAFTS=true` (CI and preview deploys).
