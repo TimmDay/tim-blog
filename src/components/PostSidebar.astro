@@ -1,0 +1,72 @@
+---
+/** Beside every Post: who wrote it, how to get in touch, and the latest Posts. */
+import { postUrl, type Post } from '../lib/posts';
+import { cvVariants, site } from '../lib/site';
+
+type Props = { recent: Post[] };
+const { recent } = Astro.props;
+---
+
+<aside aria-label={`About ${site.author}`}>
+  <!-- Placeholder copy: Tim to replace. -->
+  <p>
+    Hi, I'm <a href="/about/">{site.author}</a>. Lorem ipsum dolor sit amet.
+  </p>
+  <p>
+    If you're hiring or want a hand, <a href="/contact/">let's talk</a>.
+  </p>
+
+  <h2>CV</h2>
+  <ul>
+    {cvVariants.map((cv) => (
+      <li>
+        <a href={cv.href} download>
+          {cv.role} <span class="type">(PDF)</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  {recent.length > 0 && (
+    <>
+      <h2>Recent</h2>
+      <ul>
+        {recent.map((post) => (
+          <li>
+            <a href={postUrl(post)}>{post.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</aside>
+
+<style>
+  aside {
+    background: var(--color-surface);
+    padding: var(--space-4);
+    align-self: start;
+  }
+
+  aside > :last-child {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-size: var(--text-base);
+    margin: var(--space-6) 0 var(--space-2);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li + li {
+    margin-top: var(--space-2);
+  }
+
+  .type {
+    color: var(--color-muted);
+  }
+</style>

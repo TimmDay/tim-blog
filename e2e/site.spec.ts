@@ -67,6 +67,12 @@ test("the contact page is titled Let's talk and linked from the header", async (
   );
 });
 
+test('a Post has a sidebar with both CV Variants', async ({ page }) => {
+  await page.goto('/posts/widgets-demo/');
+  const sidebar = page.getByRole('complementary', { name: 'About Tim Day' });
+  await expect(sidebar.getByRole('link', { name: /PDF/ })).toHaveCount(2);
+});
+
 test('the style guide is kept out of search engines and the sitemap', async ({
   page,
   request,
@@ -96,7 +102,7 @@ test.describe('theme toggle', () => {
     const bg = await page.evaluate(
       () => getComputedStyle(document.body).backgroundColor,
     );
-    expect(bg).toBe('rgb(15, 20, 28)');
+    expect(bg).toBe('rgb(20, 20, 20)');
 
     await page.goto('/about/');
     await expect(html).toHaveAttribute('data-theme', 'dark');

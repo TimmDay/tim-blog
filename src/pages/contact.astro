@@ -1,16 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
 import Button from '../components/ui/Button.astro';
-import Card from '../components/ui/Card.astro';
 import { cvVariants, profileLinks, site } from '../lib/site';
 ---
 
 <Base
   title="Let's talk"
   description={`How to reach ${site.author}, and CV downloads.`}
+  width="prose"
 >
-  <Card as="article">
-    <h1>Let's talk</h1>
+  <h1>Let's talk</h1>
+  <div class="prose">
     <!-- Placeholder copy: Tim to replace. -->
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
@@ -39,7 +39,7 @@ import { cvVariants, profileLinks, site } from '../lib/site';
         </li>
       ))}
     </ul>
-  </Card>
+  </div>
 </Base>
 
 <style>

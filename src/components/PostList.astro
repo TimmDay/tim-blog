@@ -1,0 +1,60 @@
+---
+/** Post titles and dates, newest first. The date sits under the title on phones. */
+import { formatDate, postUrl, type Post } from '../lib/posts';
+
+type Props = { posts: Post[] };
+const { posts } = Astro.props;
+---
+
+<ol class="post-list">
+  {posts.map((post) => (
+    <li>
+      <a href={postUrl(post)}>{post.data.title}</a>
+      <span class="date">
+        <time datetime={post.data.date.toISOString()}>
+          {formatDate(post.data.date)}
+        </time>
+        {post.data.draft && ' · Draft'}
+      </span>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-8);
+  }
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0 var(--space-8);
+    padding: var(--space-3) 0;
+  }
+
+  a {
+    color: var(--color-heading);
+    text-decoration: none;
+    flex: 1 1 20rem;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .date {
+    color: var(--color-muted);
+    flex: 0 0 12rem;
+  }
+
+  @media (max-width: 40rem) {
+    .date {
+      flex-basis: 100%;
+      font-size: var(--text-sm);
+    }
+  }
+</style>

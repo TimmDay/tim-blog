@@ -1,141 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Image } from 'astro:assets';
-import BeliefList, { type Belief } from '../components/BeliefList.astro';
-import LogoStrip, { type Employer } from '../components/LogoStrip.astro';
-import PostCard from '../components/PostCard.astro';
+import PostList from '../components/PostList.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
-import Card from '../components/ui/Card.astro';
-import Eyebrow from '../components/ui/Eyebrow.astro';
-import profile from '../assets/profile.jpg';
 import { getVisiblePosts } from '../lib/posts';
 import { site } from '../lib/site';
 
-const recent = (await getVisiblePosts()).slice(0, 3);
-
-// Placeholder copy below: Tim to replace.
-const employers: Employer[] = [
-  { name: 'Lorem Co' },
-  { name: 'Ipsum Group' },
-  { name: 'Dolor Labs' },
-  { name: 'Sit Amet' },
-];
-
-const beliefs: Belief[] = [
-  {
-    lead: 'Lorem ipsum dolor',
-    body: '- sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
-  },
-  {
-    lead: 'Ut enim ad minim',
-    body: '- veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-  },
-  {
-    lead: 'Duis aute irure',
-    body: '- dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
-  },
-  {
-    lead: 'Excepteur sint',
-    body: '- occaecat cupidatat non proident, sunt in culpa qui officia deserunt.',
-  },
-];
+const posts = await getVisiblePosts();
+const recent = posts.slice(0, 10);
 ---
 
 <Base>
   <h1 class="visually-hidden">{site.author}</h1>
 
-  <Card as="section" label="Introduction">
-    <p class="opener">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
-    </p>
-    <p>
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-      doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo.
-    </p>
-    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
-    <Image
-      class="profile"
-      src={profile}
-      alt={site.author}
-      width={300}
-      loading="eager"
-      fetchpriority="high"
-    />
-    <p>
-      I'm {site.author}. Lorem ipsum dolor sit amet, consectetur adipiscing
-      elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-    </p>
-    <p>Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus.</p>
-    <p class="cta">
-      <ArrowLink href="/about/">More about me</ArrowLink>
-    </p>
-  </Card>
-
-  <Card as="section" label="Experience">
-    <p class="callout">
-      Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus
-      vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum
-      nulla sed consectetur.
-    </p>
-    <LogoStrip items={employers} />
-  </Card>
-
-  <Card as="section" label="What I believe">
-    <h2>What I believe</h2>
-    <p>Lorem ipsum dolor sit amet.</p>
-    <BeliefList items={beliefs} />
-    <p>
-      If any of this resonates, <a href="/contact/">let's talk</a>.
-    </p>
-  </Card>
+  <!-- Placeholder copy: Tim to replace. Keep the links: they do the hiring work. -->
+  <p class="intro">
+    Hi, I'm <a href="/about/">{site.author}</a>. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. If
+    you're hiring, <a href="/contact/">let's talk</a> or grab{' '}
+    <a href="/contact/">my CV</a>. You can also follow along via{' '}
+    <a href="/rss.xml">RSS</a>.
+  </p>
 
   {recent.length > 0 && (
-    <section aria-labelledby="recent">
-      <Eyebrow>
-        <span id="recent">Recent thinking</span>
-      </Eyebrow>
-      {recent.map((post) => (
-        <PostCard post={post} headingLevel={3} />
-      ))}
-      <p class="all">
-        <ArrowLink href="/posts/">All Posts</ArrowLink>
-      </p>
+    <section aria-label="Recent Posts">
+      <PostList posts={recent} />
+      {posts.length > recent.length && (
+        <p>
+          <ArrowLink href="/posts/">All Posts</ArrowLink>
+        </p>
+      )}
     </section>
   )}
 </Base>
 
 <style>
-  .opener {
-    color: var(--color-heading);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-bold);
+  .intro {
+    max-width: var(--width-prose);
+    margin: var(--space-4) auto var(--space-16);
     line-height: var(--leading-normal);
-    margin-bottom: var(--space-6);
-  }
-
-  .profile {
-    display: block;
-    margin: var(--space-10) auto;
-    width: 300px;
-    max-width: 100%;
-    border-radius: var(--radius-photo);
-  }
-
-  .cta {
-    margin-top: var(--space-8);
-  }
-
-  .callout {
-    text-align: center;
-    max-width: 38.75rem;
-    margin-inline: auto;
-  }
-
-  section > :global(.eyebrow) {
-    padding-inline: var(--gutter);
-  }
-
-  .all {
-    text-align: center;
   }
 </style>

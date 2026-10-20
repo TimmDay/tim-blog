@@ -31,9 +31,10 @@
 <style>
   .deck {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     padding: 1rem;
     background: var(--color-bg);
+    font-family: var(--font-sans);
   }
 
   .count,

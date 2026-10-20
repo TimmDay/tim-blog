@@ -32,38 +32,36 @@ const { variant = 'primary', href, download, type = 'button' } = Astro.props;
     gap: var(--space-2);
     min-height: 44px;
     padding: var(--space-2) var(--space-5);
-    border: 2px solid var(--color-link);
+    border: 2px solid var(--color-heading);
     border-radius: var(--radius-sm);
     font: inherit;
+    font-family: var(--font-sans);
     font-size: var(--text-base);
     font-weight: var(--weight-bold);
     text-decoration: none;
     cursor: pointer;
     transition:
       background-color 0.15s,
-      border-color 0.15s,
       color 0.15s;
   }
 
   .primary {
-    background: var(--color-link);
-    color: var(--color-on-accent);
+    background: var(--color-heading);
+    color: var(--color-bg);
   }
 
   .primary:hover {
-    background: var(--color-link-hover);
-    border-color: var(--color-link-hover);
-    color: var(--color-on-accent);
+    background: var(--color-bg);
+    color: var(--color-heading);
   }
 
   .secondary {
-    background: transparent;
-    color: var(--color-link);
+    background: var(--color-bg);
+    color: var(--color-heading);
   }
 
   .secondary:hover {
-    background: var(--color-bg);
-    color: var(--color-link-hover);
-    border-color: var(--color-link-hover);
+    background: var(--color-surface);
+    color: var(--color-heading);
   }
 </style>
