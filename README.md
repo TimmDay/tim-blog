@@ -9,6 +9,7 @@ Built with Astro, MDX and Svelte. Hosted on Cloudflare.
 ```sh
 pnpm install
 pnpm dev          # local server
+pnpm new-post "Title"   # start a draft Post
 pnpm check        # lint + typecheck
 pnpm test:run     # unit tests
 pnpm build        # static site in dist/
