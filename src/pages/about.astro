@@ -1,30 +1,90 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import ArrowLink from '../components/ui/ArrowLink.astro';
-import Card from '../components/ui/Card.astro';
+import BeliefList, { type Belief } from '../components/BeliefList.astro';
+import LogoStrip, { type Employer } from '../components/LogoStrip.astro';
+import profile from '../assets/profile.jpg';
 import { site } from '../lib/site';
+
+// Placeholder copy below: Tim to replace.
+const employers: Employer[] = [
+  { name: 'Lorem Co' },
+  { name: 'Ipsum Group' },
+  { name: 'Dolor Labs' },
+  { name: 'Sit Amet' },
+];
+
+const beliefs: Belief[] = [
+  {
+    lead: 'Lorem ipsum dolor',
+    body: '- sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
+  },
+  {
+    lead: 'Ut enim ad minim',
+    body: '- veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+  },
+  {
+    lead: 'Duis aute irure',
+    body: '- dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.',
+  },
+  {
+    lead: 'Excepteur sint',
+    body: '- occaecat cupidatat non proident, sunt in culpa qui officia deserunt.',
+  },
+];
 ---
 
 <Base
   title="About"
   description={`About ${site.author}: background and experience.`}
+  width="prose"
 >
-  <Card as="article">
-    <h1>About</h1>
-    <!-- Placeholder copy: Tim to replace with a short career story and a CV summary. -->
+  <h1>{site.author}</h1>
+  <div class="prose">
+    <Image
+      class="profile"
+      src={profile}
+      alt={site.author}
+      width={160}
+      loading="eager"
+      fetchpriority="high"
+    />
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-      erat a ante venenatis dapibus posuere velit aliquet.
+      erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus
+      mollis interdum.
+    </p>
+    <p>
+      If any of this fits what you need, <a href="/contact/">let's talk</a> or
+      download <a href="/contact/">my CV</a>.
     </p>
 
     <h2>Experience</h2>
-    <ul>
-      <li>Lorem ipsum, Role, 2020 to now</li>
-      <li>Dolor sit amet, Role, 2016 to 2020</li>
-    </ul>
-
     <p>
-      <ArrowLink href="/contact/">Download my CV</ArrowLink>
+      Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus
+      vel augue laoreet rutrum faucibus dolor auctor.
     </p>
-  </Card>
+    <LogoStrip items={employers} />
+
+    <h2>What I believe</h2>
+    <BeliefList items={beliefs} />
+  </div>
 </Base>
+
+<style>
+  .profile {
+    float: right;
+    width: 160px;
+    margin: 0 0 var(--space-4) var(--space-6);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius-pill);
+  }
+
+  @media (max-width: 30rem) {
+    .profile {
+      float: none;
+      margin: 0 0 var(--space-6);
+    }
+  }
+</style>

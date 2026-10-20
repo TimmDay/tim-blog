@@ -4,16 +4,13 @@ import Base from '../layouts/Base.astro';
 import BeliefList from '../components/BeliefList.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
 import Button from '../components/ui/Button.astro';
-import Card from '../components/ui/Card.astro';
-import Eyebrow from '../components/ui/Eyebrow.astro';
 import Logo from '../components/ui/Logo.astro';
-import Tag from '../components/ui/Tag.astro';
 
 const colors = [
   ['--color-bg', 'Page background'],
-  ['--color-surface', 'Cards, header'],
-  ['--color-text', 'Body text'],
-  ['--color-heading', 'Headings, strong'],
+  ['--color-surface', 'Sidebar, panels'],
+  ['--color-text', 'Reading text'],
+  ['--color-heading', 'Headings, nav, UI text'],
   ['--color-muted', 'Dates, captions'],
   ['--color-link', 'Links, primary buttons'],
   ['--color-link-hover', 'Link hover'],
@@ -23,12 +20,20 @@ const colors = [
 ];
 
 const sizes = [
-  ['--text-xl', 'h1'],
-  ['--text-lg', 'h2, opener'],
+  ['--text-2xl', 'h1'],
+  ['--text-xl', 'Wordmark, h2'],
+  ['--text-lg', 'Nav, h3'],
   ['--text-md', 'Reading text'],
-  ['--text-base', 'UI, nav, dates'],
-  ['--text-sm', 'Meta, captions, code'],
-  ['--text-xs', 'Eyebrow labels'],
+  ['--text-base', 'UI, lists, dates'],
+  ['--text-sm', 'Captions, code, footer'],
+  ['--text-xs', 'Fine print'],
+];
+
+const fonts = [
+  ['--font-sans', 'UI: Avenir Next, else Segoe UI or the system sans'],
+  ['--font-serif', 'Reading text: Georgia'],
+  ['--font-display', 'h1: Athelas, else Georgia'],
+  ['--font-mono', 'Code'],
 ];
 
 const spaces = [
@@ -47,92 +52,95 @@ const spaces = [
 ];
 ---
 
-<Base title="Style guide" noindex>
-  <Card>
-    <h1>Style guide</h1>
-    <p>
-      Tokens live in <code>src/styles/tokens.css</code>, components in
-      <code>src/components/ui/</code>. Use the theme toggle in the header to see
-      the dark palette.
-    </p>
+<Base title="Style guide" noindex width="prose">
+  <h1>Style guide</h1>
+  <p>
+    Tokens live in <code>src/styles/tokens.css</code>, components in
+    <code>src/components/ui/</code>. Use the theme toggle in the header to see
+    the dark palette.
+  </p>
 
-    <h2>Colour</h2>
-    <ul class="swatches">
-      {colors.map(([token, use]) => (
-        <li>
-          <span class="swatch" style={`background: var(${token})`} />
-          <code>{token}</code>
-          <span class="use">{use}</span>
-        </li>
-      ))}
-    </ul>
+  <h2>Colour</h2>
+  <ul class="swatches">
+    {colors.map(([token, use]) => (
+      <li>
+        <span class="swatch" style={`background: var(${token})`} />
+        <code>{token}</code>
+        <span class="use">{use}</span>
+      </li>
+    ))}
+  </ul>
 
-    <h2>Type</h2>
-    <p>Open Sans, 400 and 700, self-hosted.</p>
-    <ul class="plain">
-      {sizes.map(([token, use]) => (
-        <li class="type-row">
-          <span style={`font-size: var(${token}); line-height: 1.3`}>
-            The quick brown fox
-          </span>
-          <code>{token}</code> <span class="use">{use}</span>
-        </li>
-      ))}
-    </ul>
+  <h2>Type</h2>
+  <p>System fonts only: nothing is downloaded.</p>
+  <ul class="plain">
+    {fonts.map(([token, use]) => (
+      <li class="type-row">
+        <span style={`font-family: var(${token})`}>The quick brown fox</span>
+        <code>{token}</code> <span class="use">{use}</span>
+      </li>
+    ))}
+  </ul>
+  <ul class="plain">
+    {sizes.map(([token, use]) => (
+      <li class="type-row">
+        <span style={`font-size: var(${token}); line-height: 1.3`}>
+          The quick brown fox
+        </span>
+        <code>{token}</code> <span class="use">{use}</span>
+      </li>
+    ))}
+  </ul>
 
-    <h2>Spacing</h2>
-    <ul class="plain">
-      {spaces.map((n) => (
-        <li class="space-row">
-          <code>--space-{n}</code>
-          <span class="bar" style={`width: var(--space-${n})`} />
-        </li>
-      ))}
-    </ul>
+  <h2>Spacing</h2>
+  <ul class="plain">
+    {spaces.map((n) => (
+      <li class="space-row">
+        <code>--space-{n}</code>
+        <span class="bar" style={`width: var(--space-${n})`} />
+      </li>
+    ))}
+  </ul>
 
-    <h2>Links</h2>
-    <p>
-      An <a href="#links">inline link</a> sits in a sentence and is always
-      underlined. A standalone call to action uses ArrowLink:
-    </p>
-    <p>
-      <ArrowLink href="#links">Continue reading</ArrowLink>
-    </p>
+  <h2>Links</h2>
+  <p>
+    An <a href="#links">inline link</a> sits in a sentence and is always
+    underlined. A standalone call to action uses ArrowLink:
+  </p>
+  <p>
+    <ArrowLink href="#links">All Posts</ArrowLink>
+  </p>
+  <p class="prose">
+    Inside <code>.prose</code>, text is serif and grey, with
+    <a href="#links">links like this</a>.
+  </p>
 
-    <h2>Buttons</h2>
-    <div class="row">
-      <Button>Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button href="#buttons">Link as button</Button>
-    </div>
+  <h2>Buttons</h2>
+  <div class="row">
+    <Button>Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button href="#buttons">Link as button</Button>
+  </div>
 
-    <h2>Labels</h2>
-    <Eyebrow as="p">Eyebrow label</Eyebrow>
-    <div class="row">
-      <Tag>ai</Tag>
-      <Tag>leadership</Tag>
-    </div>
+  <h2>Belief list</h2>
+  <BeliefList
+    items={[
+      { lead: 'Lorem ipsum', body: '- dolor sit amet, consectetur.' },
+      { lead: 'Sed do eiusmod', body: '- tempor incididunt ut labore.' },
+    ]}
+  />
 
-    <h2>Belief list</h2>
-    <BeliefList
-      items={[
-        { lead: 'Lorem ipsum', body: '- dolor sit amet, consectetur.' },
-        { lead: 'Sed do eiusmod', body: '- tempor incididunt ut labore.' },
-      ]}
-    />
+  <h2>Text</h2>
+  <p>
+    Body text with <strong>strong emphasis</strong> and
+    <code>inline code</code>.
+  </p>
+  <hr />
 
-    <h2>Text</h2>
-    <p>
-      Body text with <strong>strong emphasis</strong> and
-      <code>inline code</code>.
-    </p>
-    <hr />
-
-    <h2>Logo</h2>
-    <div class="row">
-      <Logo size={30} /> <Logo size={64} /> <Logo size={128} />
-    </div>
-  </Card>
+  <h2>Logo</h2>
+  <div class="row">
+    <Logo size={30} /> <Logo size={64} /> <Logo size={128} />
+  </div>
 </Base>
 
 <style>

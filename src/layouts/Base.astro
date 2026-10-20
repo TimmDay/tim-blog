@@ -1,5 +1,4 @@
 ---
-import { Font } from 'astro:assets';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -17,6 +16,8 @@ type Props = {
   jsonLd?: Record<string, unknown>;
   /** Keep this page out of search engines (e.g. the style guide). */
   noindex?: boolean;
+  /** Content width: prose for reading pages, page for lists, wide for a Post and its sidebar. */
+  width?: 'prose' | 'page' | 'wide';
 };
 
 const {
@@ -27,6 +28,7 @@ const {
   type = 'website',
   jsonLd,
   noindex = false,
+  width = 'page',
 } = Astro.props;
 
 const fullTitle = title ? `${title} · ${site.author}` : site.author;
@@ -60,7 +62,6 @@ const person = {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    <Font cssVariable="--font-open-sans" preload={[{ weight: '400' }]} />
 
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -79,7 +80,7 @@ const person = {
     />
     <meta
       name="theme-color"
-      content="#161b26"
+      content="#141414"
       media="(prefers-color-scheme: dark)"
     />
 
@@ -102,7 +103,7 @@ const person = {
       Skip to content
     </a>
     <Header />
-    <main id="main">
+    <main id="main" class={`width-${width}`}>
       <slot />
     </main>
     <Footer />
@@ -111,9 +112,17 @@ const person = {
 
 <style>
   main {
-    max-width: var(--width-page);
+    max-width: calc(var(--width-page) + 2 * var(--gutter));
     margin: 0 auto;
-    padding-top: var(--space-8);
+    padding: var(--space-8) var(--gutter) var(--space-16);
+  }
+
+  main.width-prose {
+    max-width: calc(var(--width-prose) + 2 * var(--gutter));
+  }
+
+  main.width-wide {
+    max-width: calc(var(--width-wide) + 2 * var(--gutter));
   }
 
   .skip-link {
@@ -122,7 +131,7 @@ const person = {
     top: 0;
     transform: translateY(-150%);
     padding: var(--space-2) var(--space-4);
-    background: var(--color-surface);
+    background: var(--color-bg);
     border: 2px solid var(--color-link);
     z-index: 1;
   }

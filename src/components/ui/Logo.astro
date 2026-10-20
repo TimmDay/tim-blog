@@ -1,5 +1,5 @@
 ---
-/** The TD lettermark. Same artwork as public/favicon.svg. */
+/** The TD lettermark. Same artwork as public/favicon.svg; colours follow the theme. */
 type Props = { size?: number };
 const { size = 30 } = Astro.props;
 ---
@@ -13,8 +13,8 @@ const { size = 30 } = Astro.props;
   aria-hidden="true"
   focusable="false"
 >
-  <circle cx="100" cy="100" r="95" fill="#2c3e50"></circle>
-  <g fill="#ecf0f1">
+  <circle class="disc" cx="100" cy="100" r="95"></circle>
+  <g class="letters">
     <rect x="34" y="58" width="82" height="10"></rect>
     <rect x="70" y="58" width="10" height="88"></rect>
     <path
@@ -28,5 +28,13 @@ const { size = 30 } = Astro.props;
   .logo {
     display: block;
     flex-shrink: 0;
+  }
+
+  .disc {
+    fill: var(--color-brand);
+  }
+
+  .letters {
+    fill: var(--color-on-brand);
   }
 </style>

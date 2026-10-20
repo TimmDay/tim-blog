@@ -70,8 +70,9 @@
     border-color: var(--color-link);
   }
 
+  /* Keep its space until JS shows it, so the header doesn't reflow (CLS). */
   .theme-toggle[hidden] {
-    display: none;
+    visibility: hidden;
   }
 
   /* Show the theme you'd switch to. */

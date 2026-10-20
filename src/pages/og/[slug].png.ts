@@ -7,7 +7,7 @@ import { getVisiblePosts } from '../../lib/posts';
 import { site } from '../../lib/site';
 
 // Link preview images: one per Post, plus /og/default.png for every other page.
-// Placeholder styling until the design deep dive (issue #1).
+// Satori needs real font files, so these use the bundled Open Sans rather than the site's system fonts.
 
 export const getStaticPaths = (async () => {
   const posts = await getVisiblePosts();
@@ -30,12 +30,10 @@ const logo = `data:image/svg+xml;base64,${Buffer.from(
 
 // Colours mirror the light theme in src/styles/tokens.css.
 const color = {
-  bg: '#f9fafc',
-  surface: '#ffffff',
-  text: '#65738c',
-  heading: '#3e465b',
-  accent: '#3498db',
-  border: '#e0e6ed',
+  bg: '#ffffff',
+  text: '#555555',
+  heading: '#1a1a1a',
+  accent: '#357edd',
 };
 
 const el = (
@@ -61,47 +59,34 @@ export const GET: APIRoute = async ({ props }) => {
         width: '100%',
         height: '100%',
         display: 'flex',
-        padding: '48px',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: '64px 80px',
         background: color.bg,
+        borderBottom: `12px solid ${color.accent}`,
         fontFamily: 'Open Sans',
       },
-      el(
-        'div',
-        {
-          // Satori sizes boxes as content-box: 1200 - 2*48 padding = 1104, 630 - 96 = 534.
-          width: 1104,
-          height: 534,
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '56px 64px',
-          background: color.surface,
-          border: `1px solid ${color.border}`,
-          borderBottom: `8px solid ${color.accent}`,
-        },
-        [
-          el('div', { display: 'flex', alignItems: 'center', gap: '16px' }, [
-            { type: 'img', props: { src: logo, width: 56, height: 56 } },
-            el(
-              'div',
-              { fontSize: 32, fontWeight: 700, color: color.heading },
-              site.wordmark,
-            ),
-          ]),
+      [
+        el('div', { display: 'flex', alignItems: 'center', gap: '16px' }, [
+          { type: 'img', props: { src: logo, width: 56, height: 56 } },
           el(
             'div',
-            {
-              fontSize: 60,
-              fontWeight: 700,
-              lineHeight: 1.2,
-              color: color.heading,
-            },
-            title,
+            { fontSize: 32, fontWeight: 400, color: color.heading },
+            site.wordmark,
           ),
-          el('div', { fontSize: 28, color: color.text }, subtitle),
-        ],
-      ),
+        ]),
+        el(
+          'div',
+          {
+            fontSize: 64,
+            fontWeight: 700,
+            lineHeight: 1.15,
+            color: color.heading,
+          },
+          title,
+        ),
+        el('div', { fontSize: 28, color: color.text }, subtitle),
+      ],
     ) as Parameters<typeof satori>[0],
     {
       width: 1200,

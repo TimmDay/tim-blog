@@ -1,13 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import Card from '../components/ui/Card.astro';
 ---
 
-<Base title="Not found">
-  <Card>
-    <h1>Page not found</h1>
-    <p>
-      That page doesn't exist. Try the <a href="/posts/">list of Posts</a>.
-    </p>
-  </Card>
+<Base title="Not found" width="prose">
+  <h1>Page not found</h1>
+  <p class="prose">
+    That page doesn't exist. Try the <a href="/posts/">list of Posts</a>.
+  </p>
 </Base>
