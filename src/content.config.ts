@@ -3,9 +3,9 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const posts = defineCollection({
-  // One folder per Post: src/content/posts/<slug>/index.mdx, with its images alongside.
+  // One folder per Post: src/content/posts/<slug>/index.md (or .mdx for Widgets), with its images alongside.
   loader: glob({
-    pattern: '*/index.mdx',
+    pattern: '*/index.{md,mdx}',
     base: './src/content/posts',
     generateId: ({ entry }) => entry.split('/')[0],
   }),

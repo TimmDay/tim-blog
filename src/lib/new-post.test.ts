@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { localDate, postTemplate, slugify } from './new-post';
+import {
+  convertObsidianNote,
+  localDate,
+  postTemplate,
+  slugify,
+} from './new-post';
 
 describe('slugify', () => {
   it('makes a lowercase, hyphenated slug', () => {
@@ -25,5 +30,30 @@ describe('postTemplate', () => {
     expect(mdx).toContain('title: "AI: the \\"real\\" cost"');
     expect(mdx).toContain('draft: true');
     expect(mdx).toContain('date: 2026-10-21');
+  });
+});
+
+describe('convertObsidianNote', () => {
+  it('drops frontmatter and %%comments%%', () => {
+    const { body } = convertObsidianNote(
+      '---\ntags: [idea]\n---\nKeep this.%% private %%\n%%\nmore\n%%',
+    );
+    expect(body.trim()).toBe('Keep this.');
+  });
+
+  it('turns links into plain text', () => {
+    const { body } = convertObsidianNote(
+      'See [[Team health]], [[Hiring#Loops|loops]] and [[Notes#Top]].',
+    );
+    expect(body).toBe('See Team health, loops and Notes.');
+  });
+
+  it('turns image embeds into Markdown images and lists them', () => {
+    const { body, images, notes } = convertObsidianNote(
+      '![[my chart.png|300]]\n![[Other note]]',
+    );
+    expect(body).toBe('![](<./my chart.png>)\nOther note');
+    expect(images).toEqual(['my chart.png']);
+    expect(notes).toEqual(['Other note']);
   });
 });

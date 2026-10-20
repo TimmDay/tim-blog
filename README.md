@@ -10,6 +10,7 @@ Built with Astro, MDX and Svelte. Hosted on Cloudflare.
 pnpm install
 pnpm dev          # local server
 pnpm new-post "Title"   # start a draft Post
+pnpm new-post --from path/to/note.md   # turn an Obsidian note into a draft Post
 pnpm check        # lint + typecheck
 pnpm test:run     # unit tests
 pnpm build        # static site in dist/
