@@ -73,6 +73,12 @@ test('a Post has a sidebar with both CV Variants', async ({ page }) => {
   await expect(sidebar.getByRole('link', { name: /PDF/ })).toHaveCount(2);
 });
 
+test('a single newline in a Post is a line break', async ({ page }) => {
+  await page.goto('/posts/widgets-demo/');
+  const paragraph = page.getByText('Images live in the Post');
+  await expect(paragraph.locator('br')).toHaveCount(1);
+});
+
 test('the style guide is kept out of search engines and the sitemap', async ({
   page,
   request,

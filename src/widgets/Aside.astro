@@ -33,4 +33,9 @@ const { summary } = Astro.props;
     border-left: 3px solid var(--color-accent);
     color: var(--color-muted);
   }
+
+  /* Slotted Markdown paragraphs bring their own bottom margin. */
+  aside > :global(:last-child) {
+    margin-bottom: 0;
+  }
 </style>
