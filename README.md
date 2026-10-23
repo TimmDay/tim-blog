@@ -15,6 +15,8 @@ pnpm test:run     # unit tests
 pnpm build        # static site in dist/
 ```
 
+In VS Code, accept the recommended extensions (Prettier and MDX) and Posts format on save.
+
 ## Docs
 
 - [GLOSSARY.md](GLOSSARY.md): the words this project uses
