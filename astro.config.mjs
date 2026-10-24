@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 import { unified } from '@astrojs/markdown-remark';
+import remarkBreaks from 'remark-breaks';
 import { remarkRequireAlt } from './src/lib/remark-require-alt.ts';
 
 // https://astro.build/config
@@ -17,6 +18,7 @@ export default defineConfig({
     sitemap({ filter: (page) => !page.endsWith('/styleguide/') }),
   ],
   markdown: {
-    processor: unified({ remarkPlugins: [remarkRequireAlt] }),
+    // remarkBreaks: a single newline in a Post is a line break on the page.
+    processor: unified({ remarkPlugins: [remarkRequireAlt, remarkBreaks] }),
   },
 });
