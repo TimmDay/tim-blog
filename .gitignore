@@ -5,9 +5,6 @@ dist/
 .env.*
 .DS_Store
 
-# Rough post ideas, never committed
-drafts/
-
 # Test output
 test-results/
 playwright-report/
